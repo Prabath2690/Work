@@ -21,4 +21,4 @@ jobs:
       - name: test
         run: echo "hello"
       - name: docker tag & push  
-        run: docker tag fast_api:Prabath shubhambawa98/testlkm:satyam && docker push shubhambawa98/testlkm:Prabath
+        run: docker tag fast_api:shubham shubhambawa98/testlkm:satyam && docker push shubhambawa98/testlkm:Prabath
