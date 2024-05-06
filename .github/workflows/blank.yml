@@ -1,25 +1,39 @@
-#Updatedpat
+
+ 
+ 
+# This is a basic workflow to help you get started with Actions
+ 
 name: CI
+ 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:
 jobs:
-  Buildandpushdocker:
+  lint:
     runs-on: ubuntu-latest
-    environment: Dev
     steps:
-      - name: gitclone 
-        run: git clone https://github.com/Shubhambawa98/testenv.git
-      - name: docker installation 
-        run: curl -fsSL https://get.docker.com | sh 
-      - name: docker login 
-        run: docker login -u ${{secrets.DOCKERHUBUSERNAME}} -p ${{secrets.DOCKERHUBPASSWORD}}
-      - name: docker build 
-        run: cd testenv && docker build -t shubhambawa/testlkm:v1.0 .
-      - name: test
-        run: echo "hello"
-      - name: docker tag & push  
-        run: docker push shubhambawa/testlkm:v1.0
+      - uses: actions/checkout@v2
+      - run: echo "Hello world"
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "Hello world"
+  publish:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "Hello world"
+  test1:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo "hello Test"
