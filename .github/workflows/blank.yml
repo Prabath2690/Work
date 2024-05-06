@@ -1,23 +1,24 @@
-
- 
-name: Python package
- 
-on: [push]
- 
+name: CI
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
 jobs:
-  build:
- 
+  Buildandpushdocker:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["pypy3.9", "pypy3.10", "3.9", "3.10", "3.11", "3.12"]
- 
+    environment: Dev
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      # You can test your matrix by printing the current Python version
-      - name: Display Python version
-        run: python -c "import sys; print(sys.version)"
+      - name: gitclone 
+        run: git clone https://github.com/Shubhambawa98/testenv.git
+      - name: docker installation 
+        run: curl -fsSL https://get.docker.com | sh 
+      - name: docker login 
+        run: docker login -u ${{secrets.DOCKERHUBUSERNAME}} -p ${{secrets.DOCKERHUBPASSWORD}}
+      - name: docker build 
+        run: cd testenv && docker build . -t fast_api:satyam
+      - name: test
+        run: echo "hello"
+      - name: docker tag & push  
+        run: docker tag fast_api:satyam shubhambawa98/testlkm:satyam && docker push shubhambawa98/testlkm:satyam
