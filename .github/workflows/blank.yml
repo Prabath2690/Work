@@ -1,6 +1,5 @@
-[11:23 AM] Kumar, Shubham
-name: CI
 
+name: CI
 on:
 
   push:
@@ -46,6 +45,4 @@ jobs:
       - name: docker tag & push  
 
         run: docker tag fast_api:satyam shubhambawa98/testlkm:satyam && docker push shubhambawa98/testlkm:satyam
- surprised 1
-GitHub - Shubhambawa98/testenv
-Contribute to Shubhambawa98/testenv development by creating an account on GitHub.
+
